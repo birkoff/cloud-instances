@@ -1,0 +1,172 @@
+{
+  "config": {
+    "sns": {
+      "sns_topic_arn": "arn:aws:sns:eu-central-1:000000000000:ec2managerReceiver",
+      "account_name": "engineering",
+      "role": "arn:aws:iam::000000000000:role/ec2manager/cloud-machines-assume-role-dev",
+      "region": "eu-central-1"
+    }
+  },
+  "accounts": {
+    "academy": {
+      "id": "000000000001",
+      "name": "academy",
+      "ssh_key": "ec2manager-key-dev",
+      "regions": {
+        "frankfurt": "eu-central-1"
+      },
+      "subnets": {
+        "eu-central-1a": "subnet-000000000001",
+        "eu-central-1b": "subnet-000000000002",
+        "eu-central-1c": "subnet-000000000003"
+      },
+      "security_groups": {
+        "frankfurt": [
+          "sg-000000000001"
+        ]
+      },
+      "environments": ["dev", "test", "prod"],
+      "tag_filters": {
+        "instances": [
+          {
+            "Name": "tag:Role",
+            "Values": [
+              "ec2manager-test"
+            ]
+          }
+        ],
+        "amis": [
+          {
+            "Name": "tag:Role",
+            "Values": [
+              "ec2manager"
+            ]
+          }
+        ],
+        "security_groups": [
+          {
+            "Name": "tag:Role",
+            "Values": [
+              "ec2manager"
+            ]
+          }
+        ]
+      },
+      "tag_role": "ec2manager-test",
+      "instance_profile": "arn:aws:iam::000000000001:instance-profile/admin/tip-services-profile",
+      "sts_role": "arn:aws:iam::000000000001:role/ec2manager/cloud-machines-assume-role-dev"
+    },
+    "cst": {
+      "id": "000000000002",
+      "name": "cst",
+      "ssh_key": "ec2manager-key-dev",
+      "regions": {
+        "virginia": "us-east-1",
+        "ireland": "eu-west-1"
+      },
+      "subnets": {
+        "eu-west-1a": "subnet-0000000000021",
+        "eu-west-1b": "subnet-0000000000022",
+        "eu-west-1c": "subnet-0000000000023",
+        "us-east-1a": "subnet-0000000000024",
+        "us-east-1b": "subnet-0000000000025",
+        "us-east-1c": "subnet-0000000000026"
+      },
+      "security_groups": {
+        "ireland": [
+          "sg-0000000000021"
+        ],
+        "virginia": [
+          "sg-0000000000022"
+        ]
+      },
+      "environments": ["dev", "test", "prod"],
+      "tag_filters": {
+        "instances": [
+          {
+            "Name": "tag:Role",
+            "Values": [
+              "ec2manager-test"
+            ]
+          }
+        ],
+        "amis": [
+          {
+            "Name": "tag:Role",
+            "Values": [
+              "ec2manager-test"
+            ]
+          }
+        ],
+        "security_groups": [
+          {
+            "Name": "tag:Role",
+            "Values": [
+              "ec2manager-test"
+            ]
+          }
+        ]
+      },
+      "tag_role": "ec2manager-test",
+      "instance_profile": "arn:aws:iam::000000000002:instance-profile/admin/tip-services-profile",
+      "sts_role": "arn:aws:iam::000000000002:role/ec2manager/cloud-machines-assume-role-dev"
+    },
+    "engineering": {
+      "id": "000000000003",
+      "name": "engineering",
+      "enabled": true,
+      "ssh_key": "ec2manager-key-dev",
+      "regions": {
+        "frankfurt": "eu-central-1"
+      },
+      "subnets": {
+        "eu-central-1a": "subnet-0000000000031",
+        "eu-central-1b": "subnet-0000000000032",
+        "eu-central-1c": "subnet-0000000000033"
+      },
+      "security_groups": {
+        "frankfurt": [
+          "sg-0000000000031"
+        ]
+      },
+      "tag_filters": {
+        "instances": [
+          {
+            "Name": "tag:Role",
+            "Values": [
+              "ec2manager-test"
+            ]
+          }
+        ],
+        "images": [
+          {
+            "Name": "tag:Role",
+            "Values": [
+              "ec2manager"
+            ]
+          }
+        ],
+        "security_groups": [
+          {
+            "Name": "tag:Role",
+            "Values": [
+              "ec2manager"
+            ]
+          }
+        ]
+      },
+      "environments": ["dev", "test", "prod"],
+      "tag_role": "ec2manager-test",
+      "hosted_zone_ids": {
+        "public": "XXXXXXXXXXXXXX",
+        "private": "XXXXXXXXXXXXXX"
+      },
+      "hosted_zone_names": {
+        "public": "eng.",
+        "private": "eng.test"
+      },
+      "instance_profile": "arn:aws:iam::000000000002:instance-profile/admin/tip-services-profile",
+      "sts_role": "arn:aws:iam::000000000002:role/ec2manager/cloud-machines-assume-role-dev"
+    }
+  }
+}

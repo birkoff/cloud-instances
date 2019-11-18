@@ -1,0 +1,5 @@
+{
+  "account_id": "000000000001",
+  "sns_message_broadcast": "arn:aws:sns:eu-central-1:000000000001:ec2managerReceiver",
+  "profile": "engineering-prod"
+}
