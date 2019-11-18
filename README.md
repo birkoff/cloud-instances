@@ -32,22 +32,25 @@ he point is that if the Instance is listed in the page it will be controlled by 
 - Creates Route53 private and public records
 - Executes init script which setups the "dev" user and injects our ssh keys into it
 
+##Backup EC2 Instance/Create AMI 
+- Creates a complete Image of the Instance including all Data Volumes
 
-### Start/Stop/Terminate EC2 Instances
-####Start:
+
+## Change State EC2 Instances
+###Start:
 - Creates Route53 private and public records
 - Starts the Instance
 
-####Stop:
+###Stop:
 - Removes Route53 private and public records
 - Stops the Instance
 
-####Terminate:
+###Terminate:
 - Removes Route53 private and public records
 - Terminates the Instance
 
 
-###Update EC2 Instance
+##Update EC2 Instance
 - name # perform duplicated name validation
 - owner
 - environment
@@ -56,9 +59,6 @@ he point is that if the Instance is listed in the page it will be controlled by 
 - stop_time
 - start_time
 - Updates Route53 private and public records id name was updated
-
-###Backup EC2 Instance/Create AMI 
-- Creates a complete Image of the Instance including all Data Volumes
 
 ### Scheduled Stop Time
 Scheduled Function which executes every hour, queries for instance with tag: StopTime with the "int" value of the current UTC hour and executes in batch the Stop EC2 Instance action

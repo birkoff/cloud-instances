@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html>
+
+
+<head>
+    <title>EC2 Manager</title>
+    <link rel="stylesheet" href="../bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css">
+    <link rel="stylesheet" href="../bower_components/open-iconic/font/css/open-iconic.css" >
+    <link rel="stylesheet" href="css/main.css">
+</head>
+
+
+<body>
+
+    <header>
+        <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+          <a class="navbar-brand" href="#">EC2Manager</a>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+              <li class="nav-item active">
+                <a class="nav-link" href="index.html">Accounts <span class="sr-only">(current)</span></a>
+              </li>
+            </ul>
+            <form class="form-inline my-2 my-lg-0">
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#create-platform-modal" id="platformModalButton">
+                    Create Platform
+                </button>&nbsp;&nbsp;             
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#create-instance-modal" id="instanceModalButton">
+                    Create EC2 Instance
+                </button>
+            </form>
+          </div>
+        </nav>
+    </header>
+
+    <div id="success-feedback"></div>
+    <div id="error-feedback"></div>
+
+    <div class="container-fluid" id="main-container">
+        <!-- Create PLATFORM Modal -->
+        <div class="modal fade" id="create-platform-modal" tabindex="-1" role="dialog" aria-labelledby="create-platform-modal-label" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="create-platform-modal-label">Create new Platform</h5>
+                    </div>
+
+                    <div class="modal-body">
+                        <form id="create-platform-form" class="needs-validation" novalidate>
+                            <div class="form-group">
+                                <label for="create-platform-name">Sub-domain Name</label>
+                                <input type="text" class="form-control" id="create-platform-name" required>
+                                <small id="create-platform-name-help" class="form-text text-muted">
+                                <div class="invalid-feedback">
+                                    Please enter a valid Name.
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="create-platform-email">platform email</label>
+                                <input type="text" class="form-control" id="create-platform-email" value="qa@email.com" required>
+                                <small id="create-platform-email-help" class="form-text text-muted">
+                                <div class="invalid-feedback">
+                                    Please enter a valid Name.
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="create-platform-username">platform username</label>
+                                <input type="text" class="form-control" id="create-platform-username" value="admin" required>
+                                <small id="create-platform-username-help" class="form-text text-muted">
+                                <div class="invalid-feedback">
+                                    Please enter a valid Name.
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="create-platform-password">platform password</label>
+                                <input type="text" class="form-control" id="create-platform-password" value="" required>
+                                <small id="create-platform-password-help" class="form-text text-muted">
+                                <div class="invalid-feedback">
+                                    Please enter a valid Name.
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="create-platform-api-version">platform API version</label>
+                                <input type="text" class="form-control" id="create-platform-api-version" value="" required>
+                                <small id="create-platform-api-version-help" class="form-text text-muted">
+                                <div class="invalid-feedback">
+                                    Please enter a valid Name.
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="create-platform-ui-version">platform UI version</label>
+                                <input type="text" class="form-control" id="create-platform-ui-version" value="" required>
+                                <small id="create-platform-ui-version-help" class="form-text text-muted">
+                                <div class="invalid-feedback">
+                                    Please enter a valid Name.
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="create-platform-owner">Owner</label>
+                                    <select class="form-control" id="create-platform-owner" required></select>
+                                    <div class="invalid-feedback">
+                                        Please choose a valid Owner.
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="create-platform-environment">Environment</label>
+                                    <select class="form-control" id="create-platform-environment" required>
+                                    </select>
+                                    <div class="invalid-feedback">
+                                        Please choose a valid Environment.
+                                    </div>
+                                </div>
+                            </div>
+                                <input type="hidden" class="form-control" id="create-platform-type" value="m4.2xlarge" required>
+                                <input type="hidden" class="form-control" id="create-platform-image-id" value="ami-000000000000" required>
+
+                            <div class="form-row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="create-platform-stop-time">Stop time (0 - 24 hours UTC [Current is: <div class="current-utc-hour"></div> hrs])</label>
+                                    <select class="form-control" id="create-platform-stop-time">
+                                        <option value="">no-stop</option>
+                                        <option>01</option>
+                                        <option>02</option>
+                                        <option>03</option>
+                                        <option>04</option>
+                                        <option>05</option>
+                                        <option>06</option>
+                                        <option>07</option>
+                                        <option>08</option>
+                                        <option>09</option>
+                                        <option>10</option>
+                                        <option>11</option>
+                                        <option>12</option>
+                                        <option>13</option>
+                                        <option>14</option>
+                                        <option>15</option>
+                                        <option>16</option>
+                                        <option>17</option>
+                                        <option>18</option>
+                                        <option>19</option>
+                                        <option selected>20</option>
+                                        <option>21</option>
+                                        <option>22</option>
+                                        <option>23</option>
+                                        <option>24</option>
+                                    </select>
+                                    <div class="valid-feedback">
+                                        Looks good!
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="create-platform-start-time">Start time (0 - 24 hours UTC [Current is: <div class="current-utc-hour"></div> hrs])</label>
+                                    <select class="form-control" id="create-platform-start-time">
+                                        <option value="">no-start</option>
+                                        <option>01</option>
+                                        <option>02</option>
+                                        <option>03</option>
+                                        <option>04</option>
+                                        <option>05</option>
+                                        <option>06</option>
+                                        <option>07</option>
+                                        <option>08</option>
+                                        <option>09</option>
+                                        <option>10</option>
+                                        <option>11</option>
+                                        <option>12</option>
+                                        <option>13</option>
+                                        <option>14</option>
+                                        <option>15</option>
+                                        <option>16</option>
+                                        <option>17</option>
+                                        <option>18</option>
+                                        <option>19</option>
+                                        <option>20</option>
+                                        <option>21</option>
+                                        <option>22</option>
+                                        <option>23</option>
+                                        <option>24</option>
+                                    </select>
+                                    <div class="valid-feedback">
+                                        Looks good!
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                    <label for="create-platform-terminate-date">Terminate Date</label>
+                                    <input class="datepicker form-control" id="create-platform-terminate-date"  data-date-format="dd/mm/yyyy" required>
+                            </div>
+
+                            <p>
+                                <button class="btn btn-outline-warning" type="button" data-toggle="collapse" data-target="#collapseSecurityGroups" aria-expanded="false" aria-controls="collapseSecurityGroups">
+                                    Add Extra Security Group
+                                </button> (Optional)
+                            </p>
+
+                            <div class="form-group collapse" id="collapseSecurityGroups">
+                                <label for="SecurityGroups">Extra-SecurityGroup (Optional)</label>
+                                <input type="text" class="form-control" id="SecurityGroups" value="">
+                                <small id="create-platform-security-groups-help" class="form-text text-muted">
+                                </small>
+                                <div class="invalid-feedback">
+                                    Please choose a valid SecurityGroup.
+                                </div>
+                            </div>
+                            <div id="error-feedback-create"></div>
+                            <button type="submit" class="btn btn-primary" id="create-platform">Submit</button>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Create Modal -->
+        <div class="modal fade" id="create-instance-modal" tabindex="-1" role="dialog" aria-labelledby="create-instance-modal-label" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="create-instance-modal-label">Create new Instance</h5>
+                    </div>
+
+                    <div class="modal-body">
+                        <form id="create-instance-form" class="needs-validation" novalidate>
+                            <div class="form-group">
+                                <label for="create-name">Sub-domain Name</label>
+                                <input type="text" class="form-control" id="create-name" required>
+                                <small id="create-name-help" class="form-text text-muted">Valid sub-domain name, only Alphanumeric chars and -<br>Instances full names will be sub-domain.environment</small>
+                                <div class="invalid-feedback">
+                                    Please enter a valid Name.
+                                </div>
+                            </div>
+
+
+                            <div class="form-row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="create-owner">Owner</label>
+                                    <select class="form-control" id="create-owner" required></select>
+                                    <div class="invalid-feedback">
+                                        Please choose a valid Owner.
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="create-environment">Environment</label>
+                                    <select class="form-control" id="create-environment" required>
+                                    </select>
+                                    <div class="invalid-feedback">
+                                        Please choose a valid Environment.
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="create-type">Type (Important to select the right type)</label>
+                                <select class="form-control" id="create-type">
+                                    <option>t2.small</option>
+                                    <option>t2.medium</option>
+                                    <option>t2.large</option>
+                                    <option>m4.xlarge</option>
+                                    <option>m4.2xlarge</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="create-image-id">AMI (Image to use for building the Instance)</label>
+                                <input type="text" class="form-control" id="create-image-id" value="" required>
+                                <div id="create-image-id-help" class="form-text text-muted"></div>
+                                <div class="invalid-feedback">Please choose a valid AMI.</div>
+                            </div>
+
+
+                            <div class="form-row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="create-stop-time">Stop time (0 - 24 hours UTC [Current is: <div class="current-utc-hour"></div> hrs])</label>
+                                    <select class="form-control" id="create-stop-time">
+                                        <option value="">no-stop</option>
+                                        <option>01</option>
+                                        <option>02</option>
+                                        <option>03</option>
+                                        <option>04</option>
+                                        <option>05</option>
+                                        <option>06</option>
+                                        <option>07</option>
+                                        <option>08</option>
+                                        <option>09</option>
+                                        <option>10</option>
+                                        <option>11</option>
+                                        <option>12</option>
+                                        <option>13</option>
+                                        <option>14</option>
+                                        <option>15</option>
+                                        <option>16</option>
+                                        <option>17</option>
+                                        <option>18</option>
+                                        <option>19</option>
+                                        <option selected>20</option>
+                                        <option>21</option>
+                                        <option>22</option>
+                                        <option>23</option>
+                                        <option>24</option>
+                                    </select>
+                                    <div class="valid-feedback">
+                                        Looks good!
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="create-start-time">Start time (0 - 24 hours UTC [Current is: <div class="current-utc-hour"></div> hrs])</label>
+                                    <select class="form-control" id="create-start-time">
+                                        <option value="">no-start</option>
+                                        <option>01</option>
+                                        <option>02</option>
+                                        <option>03</option>
+                                        <option>04</option>
+                                        <option>05</option>
+                                        <option>06</option>
+                                        <option>07</option>
+                                        <option>08</option>
+                                        <option>09</option>
+                                        <option>10</option>
+                                        <option>11</option>
+                                        <option>12</option>
+                                        <option>13</option>
+                                        <option>14</option>
+                                        <option>15</option>
+                                        <option>16</option>
+                                        <option>17</option>
+                                        <option>18</option>
+                                        <option>19</option>
+                                        <option>20</option>
+                                        <option>21</option>
+                                        <option>22</option>
+                                        <option>23</option>
+                                        <option>24</option>
+                                    </select>
+                                    <div class="valid-feedback">
+                                        Looks good!
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                    <label for="create-terminate-date">Terminate Date</label>
+                                    <input class="datepicker form-control" id="create-terminate-date"  data-date-format="dd/mm/yyyy" required>
+                            </div>
+
+                            <p>
+                                <button class="btn btn-outline-warning" type="button" data-toggle="collapse" data-target="#collapseSecurityGroups" aria-expanded="false" aria-controls="collapseSecurityGroups">
+                                    Add Extra Security Group
+                                </button> (Optional)
+                            </p>
+
+                            <div class="form-group collapse" id="collapseSecurityGroups">
+                                <label for="SecurityGroups">Extra-SecurityGroup (Optional)</label>
+                                <input type="text" class="form-control" id="SecurityGroups" value="">
+                                <small id="create-security-groups-help" class="form-text text-muted">
+                                </small>
+                                <div class="invalid-feedback">
+                                    Please choose a valid SecurityGroup.
+                                </div>
+                            </div>
+                            <div id="error-feedback-create"></div>
+                            <button type="submit" class="btn btn-primary" id="create-instance">Submit</button>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Update Modal -->
+        <div class="modal fade" id="update-instance-modal" tabindex="-1" role="dialog" aria-labelledby="update-instance-modal-label" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="update-instance-modal-label">Update Instance Attributes</h5>
+                    </div>
+
+                    <div class="modal-body">
+                        <form id="update-instance-form">
+                            <div class="form-group">
+                                <label for="update-name">Sub-domain Name</label>
+                                <input type="text" class="form-control" id="update-name" required>
+                                <input type="text" class="form-control" id="update-image" hidden>
+                                <small id="update-name-help" class="form-text text-muted">Valid sub-domain name, only Alphanumeric chars and -<br>Instances full names will be sub-domain.environment</small>
+                            </div>
+                            <div class="form-group">
+                                <label for="update-owner">Owner</label>
+                                <input type="text" class="form-control" id="update-owner" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="update-environment">Environment</label>
+                                <input type="text" class="form-control" id="update-environment" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="update-type">Size (Important to select the appropiate size)</label>
+                                <input type="text" class="form-control" id="update-type" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="update-stop-time">Stop time (0 - 24 hours, UTC [Current is: <div class="current-utc-hour"></div> hrs]</label>
+                                <input type="text" class="form-control" id="update-stop-time">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="update-start-time">Start time (0 - 24 hours, UTC [Current is: <div class="current-utc-hour"></div> hrs])</label>
+                                <input type="text" class="form-control" id="update-start-time">
+                            </div>
+
+
+                            <div class="form-group">
+                                <label for="update-terminate-date">Terminate on Date (DD/MM/YYY)</label>
+                                <input type="text" class="datepicker form-control" data-date-format="dd/mm/yyyy" id="update-terminate-date">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="update-terminate-time">Terminate time (0 - 24 hours, UTC [Current is: <div class="current-utc-hour"></div> hrs])</label>
+                                <input type="text" class="form-control" id="update-terminate-time">
+                            </div>
+                            <div id="error-feedback-update"></div>
+                            <button type="submit" id="update-instance" class="btn btn-primary">Update</button>
+                        </form>
+
+                        <div class="well" id="modal-command"></div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Backup Modal (Create AMI/Image) -->
+        <div class="modal fade" id="backup-instance-modal" tabindex="-1" role="dialog" aria-labelledby="backup-instance-modal-label" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="backup-instance-modal-label">Backup Instance, Create Image AMI</h5>
+                    </div>
+
+                    <div class="modal-body">
+                        <form id="backup-instance-form">
+                            <div class="form-group">
+                                <label for="image-name">Image Name</label>
+                                <input type="text" class="form-control" id="image-name" required>
+                                <!-- <input type="text" class="form-control" id="update-image" hidden> -->
+                                <small id="update-name-help" class="form-text text-muted">Valid sub-domain name, only Alphanumeric chars and -<br>Instances full names will be sub-domain.environment</small>
+                            </div>
+                            <div class="form-group">
+                                <label for="image-owner">Owner</label>
+                                <input type="text" class="form-control" id="image-owner" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="image-instance-name">Instance Name</label>
+                                <input type="text" class="form-control" id="image-instance-name" required>
+                                <!-- <input type="text" class="form-control" id="backup-image" hidden> -->
+                            </div>
+                            <div id="error-feedback-backup"></div>
+                            <button type="submit" id="backup-instance" class="btn btn-primary">Create Image</button>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="card">
+            <h5 class="card-header text-white bg-dark p-2"><span class="badge" id="instances-meta"></span></h5>
+            <h5></h5>
+            <div class="card-body">
+                 <div id="wait"><img src='images/loading.gif' width="94" height="94"/><br>Loading...</div>
+                <div id="instancesList"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="../bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="../bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>

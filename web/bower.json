@@ -1,0 +1,19 @@
+{
+  "name": "EC2Manager",
+  "version": "0.1.0",
+  "description": "EC2 Instances Management Console",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "vendors",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "4.0.0",
+    "bootstrap-datepicker": "latest",
+    "open-iconic": "latest",
+    "jquery": "3.3.1"
+  }
+}
