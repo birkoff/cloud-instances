@@ -1,0 +1,66 @@
+body {
+    padding-top: 70px;
+    padding-bottom: 30px;
+    font-size: 12px !important;
+}
+
+.navbar {
+    font-size: 16px !important;
+}
+
+.bg-dark {
+    background-color: #343a40!important;
+    color: #f8f9fa;
+}
+
+.card {
+    /* bottom: 12px; */
+}
+
+#wait {
+    display: none;
+    width: 69px;
+    height: 89px;
+    position: relative;
+    top: 50%;
+    left: 50%;
+}
+
+table th.text-center, table td.text-center {
+    text-align: center;
+}
+
+
+#tag-name {
+    width: 150px;
+}
+
+#tag-value {
+    width: 286px;
+}
+
+pre {
+    white-space: pre-wrap;
+}
+
+#filter-instances-form {
+   position: relative;
+  float: left;
+}
+
+#instanceModalButton {
+    position: relative;
+  float: right;
+}
+
+#top-buttons-group {
+    padding-bottom: 28px;
+}
+
+.btn-primary {
+    background-color: #343a40!important;
+}
+
+#instances-meta {
+    display: inline;
+}
