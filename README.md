@@ -12,7 +12,7 @@ he point is that if the Instance is listed in the page it will be controlled by 
 
 
 ## Features
-###Create an App/Platform Instance
+### Create an App/Platform Instance
 - Instance and DNS endpoints should be ready to use within 10 min
 - Performs validations for duplicated name, etc
 - Creates EC2 Instance with appropriate Network settings
@@ -32,25 +32,25 @@ he point is that if the Instance is listed in the page it will be controlled by 
 - Creates Route53 private and public records
 - Executes init script which setups the "dev" user and injects our ssh keys into it
 
-##Backup EC2 Instance/Create AMI 
+## Backup EC2 Instance/Create AMI 
 - Creates a complete Image of the Instance including all Data Volumes
 
 
 ## Change State EC2 Instances
-###Start:
+### Start:
 - Creates Route53 private and public records
 - Starts the Instance
 
-###Stop:
+### Stop:
 - Removes Route53 private and public records
 - Stops the Instance
 
-###Terminate:
+### Terminate:
 - Removes Route53 private and public records
 - Terminates the Instance
 
 
-##Update EC2 Instance
+## Update EC2 Instance
 - name # perform duplicated name validation
 - owner
 - environment
