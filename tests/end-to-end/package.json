@@ -1,0 +1,12 @@
+{
+  "name": "ec2manmager-ent-to-end-tests",
+  "version": "1.0.0",
+  "description": "ec2manmager end to end tests",
+  "main": "index.js",
+  "repository": "https://github.com/eclecticiq/ec2manager",
+  "author": "Hector",
+  "license": "MIT",
+  "devDependencies": {
+    "cypress": "^3.7.0"
+  }
+}

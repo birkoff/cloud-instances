@@ -2,3 +2,8 @@
 .DS_Store
 *.iml
 *.xml
+tests/end-to-end/node_modules/
+*.lock
+tests/functional/node_modules/
+tests/functional/package-lock.json
+web/bower_components/
